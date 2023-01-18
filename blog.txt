@@ -1,0 +1,91 @@
+Kafka is a powerful message streaming platform that allows for the efficient exchange of data between systems and applications. 
+
+In this blog post, we will walk through the process of setting up a Kafka environment, creating a topic, and creating both a consumer and producer in Python. 
+
+
+
+Setting up a Kafka environment:
+
+First, we will use Docker with a docker-compose file to create a Kafka broker and zookeeper. 
+A Kafka broker is a server that runs Kafka and handles all the incoming and outgoing data from and to the clients, while zookeeper is a distributed coordination service that is often used in conjunction with Kafka to manage the distributed nature of a Kafka cluster.
+To get started, you will need to have Docker installed on your machine. 
+
+You can follow this guide to install and start Docker on your PC. I'm using Docker Desktop.
+https://docs.docker.com/desktop/install/windows-install/
+
+Now lets begin.
+
+If you want you can just clone my repo or create a new project for yourself.
+https://github.com/PatrickDegner/KafkaMessageStream.git
+
+We need this docker-compose.yaml which we run in a terminal with the docker compose up command.
+This will download the image and start your kafka container.
+The code in the compose file sets up the Kafka and Zookeeper images, along with necessary environment variables for the broker and zookeeper.
+
+Next we can check if the containers are running with : docker ps
+
+
+
+
+Creating a topic:
+
+A topic in Kafka is a named stream of data to which messages can be written and read. 
+Topics are used to partition data streams and provide a way for multiple systems to read and write to the same data stream. 
+To create a topic we use this code:
+
+
+In this example, we create a topic named "new_row" using the Confluent Kafka admin client. 
+We specify the number of partitions and replication factor for the topic. 
+Partitions are used to split the data stream into smaller chunks for more efficient processing, while the replication factor controls how many copies of each partition are kept to ensure data durability.
+If we run the code now, the topic gets created.
+
+
+
+
+Creating a consumer:
+
+To consume messages from a topic, we create a Kafka consumer. 
+The consumer is responsible for fetching the data from the Kafka cluster. 
+The consumer subscribes to the topic we created and continuously polls for new messages. 
+
+In this example, we are printing the consumed messages, but in a real-world scenario, these messages can be processed and acted upon by the consuming application. 
+
+By setting the auto offset reset to 'earliest', consumer will start reading the messages from the beginning, otherwise, it will start reading from the latest message.
+
+Now we can start our consumer which will wait for incoming data.
+
+
+
+
+Creating a producer:
+
+To write messages to a topic, we create a Kafka producer. 
+A producer is responsible for sending data to the Kafka cluster. 
+
+Here we are producing 20 messages with random data in the form of a dictionary. 
+The producer is continuously sending messages to the topic, which can be consumed by the consumer.
+Lets have a look what is happening after start of the script.
+
+
+The messages are beeing sent to our Kafka cluster. Nice!
+
+But lets check the consumer now, if he got any data.
+
+
+The consumer fetched 20 messages with the random data.
+
+
+
+Mission accomplished!
+
+Overall, this is a basic example of how to use Kafka for message streaming with Python. 
+
+There are many more advanced features and configurations that can be applied to a Kafka environment, but this should give you a good starting point for working with Kafka and Python.
+
+
+
+Thank you for reading. 
+
+Greetings
+
+Patrick :)
